@@ -19,7 +19,7 @@ speedup <audio_file> <multiplier> [file_ext]
 		default: 'wav'
 ```
 
-## Building from source
+## Build from source
 ```
 git clone https://github.com/trustytrojan/speedup.py
 cd speedup.py
