@@ -2,7 +2,6 @@
 A simple script to speedup your music/audio
 
 ## Installation
-Make sure you're not installing in a virtual environment.
 ```
 pip install speedup.py
 ```
