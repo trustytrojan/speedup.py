@@ -20,15 +20,9 @@ speedup <audio_file> <multiplier> [file_ext]
 ```
 
 ## Building from source
-Clone the repository:
 ```
 git clone https://github.com/trustytrojan/speedup.py
-```
-Setup the development environment:
-```
+cd speedup.py
 sh devsetup.sh
-```
-Build the wheel:
-```
 python -m build
 ```
