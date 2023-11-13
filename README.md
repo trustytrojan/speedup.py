@@ -1,12 +1,14 @@
 # speedup.py
-A simple script to speedup your music/audio
+A simple script to speedup your music/audio.
 
 ## Installation
+To install `speedup.py` on either your system or a Python virtual environment, run:
 ```
 pip install speedup.py
 ```
 
 ## Usage
+General commandline usage of `speedup.py` is below. This is printed when not enough arguments are given.
 ```
 speedup <audio_file> <multiplier> [file_ext]
 	audio_file:
@@ -29,6 +31,7 @@ speedup audio.mp3 1.5 mp3
 ```
 
 ## Build from source
+To build the project from source into a `.whl` file, run the below commands in your terminal:
 ```
 git clone https://github.com/trustytrojan/speedup.py
 cd speedup.py
