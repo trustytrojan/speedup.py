@@ -17,7 +17,7 @@ speedup <audio_file> <multiplier> [file_ext]
 		the speed multiplier, aka multiply the audio's speed by <multiplier>
 	file_ext:
 		must be one of ('mp3', 'wav')
-		default: 'wav'
+		default: 'mp3'
 ```
 
 ### Example usage
