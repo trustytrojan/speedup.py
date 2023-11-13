@@ -23,9 +23,9 @@ To speedup `audio.mp3` by a factor of `1.5`, run:
 ```
 speedup audio.mp3 1.5
 ```
-To do so while saving it as an `mp3` file:
+By default the sped up audio is saved as a `.wav` file. To save it as an `mp3` file, run:
 ```
-speedup audio 1.5 mp3
+speedup audio.mp3 1.5 mp3
 ```
 
 ## Build from source
