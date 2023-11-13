@@ -18,6 +18,16 @@ speedup <audio_file> <multiplier> [file_ext]
 		default: 'wav'
 ```
 
+### Example usage
+To speedup `audio.mp3` by a factor of `1.5`, run:
+```
+speedup audio.mp3 1.5
+```
+To do so while saving it as an `mp3` file:
+```
+speedup audio 1.5 mp3
+```
+
 ## Build from source
 ```
 git clone https://github.com/trustytrojan/speedup.py
