@@ -15,9 +15,12 @@ def speedup_file(
 ) -> None:
 	if file_ext not in ("wav", "mp3"):
 		raise ValueError("file_ext is not one of ('wav', 'mp3')")
+
 	input_filename = input_file[:input_file.index('.')]
+	
 	if output_file is None:
 		output_file = f"{input_filename}-spedup-{multiplier}x.{file_ext}"
+	
 	audio, samplerate = sf.read(input_file)
 	spedup_audio = speedup(audio, multiplier)
 	sf.write(output_file, spedup_audio, samplerate)
