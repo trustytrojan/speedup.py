@@ -1,61 +1,67 @@
 from typing import Callable, Optional
 from numpy.typing import ArrayLike
+from argparse import ArgumentParser
 import soundfile as sf
 import numpy as np
 import scipy.signal
 
+arg_parser = ArgumentParser(description="Speed up or slow down your audio.")
+
+ARGUMENTS = {
+	"audio_file": {
+		"help": "A file containing audio"
+	},
+
+	"multiplier": {
+		"type": float,
+		"help": "Audio speed multiplier. If 1, the program exits."
+	},
+
+	"--codec": {
+		"help": "The audio codec (and file extension) to write the output file with",
+		"default": "mp3",
+	},
+
+	"--output-file": {
+		"help": "Where to store the sped up audio"
+	}
+}
+
+for key, value in ARGUMENTS.items():
+	arg_parser.add_argument(key, **value)
+
 speedup: Callable[[ArrayLike, float], ArrayLike]
-speedup = lambda audio, multiplier: scipy.signal.resample(audio, int(np.size(audio) * (1 / multiplier)))
+speedup = lambda audio, multiplier: scipy.signal.resample(audio, int(np.size(audio, axis=0) * (1 / multiplier)))
+
+def highest_index(s: str, target: str) -> int:
+	for i in range(len(s) - 1, -1, -1):
+		if s[i] == target:
+			return i
+	return -1
 
 def speedup_file(
 	input_file: str,
 	multiplier: float,
-	file_ext = "mp3",
+	codec: Optional[str] = "mp3",
 	output_file: Optional[str] = None
 ) -> None:
-	if file_ext not in ("wav", "mp3"):
-		raise ValueError("file_ext is not one of ('wav', 'mp3')")
+	if multiplier == 1:
+		return
+	if codec is None:
+		codec = "mp3"
 
-	input_filename = input_file[:input_file.index('.')]
-	
+	input_filename = input_file[highest_index(input_file, "/") : highest_index(input_file, ".")]
+
 	if output_file is None:
-		output_file = f"{input_filename}-spedup-{multiplier}x.{file_ext}"
-	
+		output_file = f"{input_filename}-{multiplier}x.{codec}"
+
 	audio, samplerate = sf.read(input_file)
 	spedup_audio = speedup(audio, multiplier)
 	sf.write(output_file, spedup_audio, samplerate)
 
 def main() -> None:
-	from sys import argv, stderr
-
-	bold: Callable[[str], str]
-	bold = lambda s: f"\x1b[1m{s}\x1b[0m"
-
-	USAGE = f"""{bold('Usage:')} {argv[0]} <audio_file> <multiplier> [file_ext]
-	audio_file:
-		the file containing audio to speed up
-	multiplier:
-		the speed multiplier, aka multiply the audio's speed by <multiplier>
-	file_ext:
-		must be one of ('mp3', 'wav')
-		default: 'mp3'"""
-
-	if len(argv) < 2:
-		print(USAGE, file=stderr)
-		exit(1)
-
-	input_file = argv[1]
-	multiplier = float(argv[2])
-	try:
-		file_ext = argv[3]
-	except IndexError:
-		file_ext = "mp3"
-
-	try:
-		speedup_file(input_file, multiplier, file_ext)
-	except ValueError as err:
-		print(f"{bold('Error:')} {err}", file=stderr)
-		print(USAGE, file=stderr)
+	args = arg_parser.parse_args()
+	speedup_file(args.audio_file, args.multiplier, args.codec, args.output_file)
 
 if __name__ == "__main__":
 	main()
