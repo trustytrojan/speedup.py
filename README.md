@@ -27,9 +27,9 @@ from speedup import speedup_file
 speedup_file("audio.mp3", 1.5)
 ```
 
-To save the sped up audio as a WAV file:
+To save the sped up audio as an MP3 file:
 ```py
-speedup_file("audio.mp3", 1.5, codec="wav")
+speedup_file("audio.mp3", 1.5, codec="mp3")
 ```
 
 By default the sped up audio is saved in `audio-1.5x.{codec}`. This can be manually set using the `output_file` keyword argument. Note that it <u>takes priority over `codec`</u>, so the file extension you write will be passed to `soundfile.write`, encoding your sped up audio as intended.
