@@ -14,7 +14,7 @@ ARGUMENTS = {
 
 	"multiplier": {
 		"type": float,
-		"help": "Audio speed multiplier. If 1, the program exits."
+		"help": "Audio speed multiplier"
 	},
 
 	"--codec": {
@@ -50,7 +50,7 @@ def speedup_file(
 	if codec is None:
 		codec = "mp3"
 
-	input_filename = input_file[highest_index(input_file, "/") : highest_index(input_file, ".")]
+	input_filename = input_file[highest_index(input_file, "/") + 1 : highest_index(input_file, ".")]
 
 	if output_file is None:
 		output_file = f"{input_filename}-{multiplier}x.{codec}"
