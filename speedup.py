@@ -2,6 +2,7 @@ from typing import Callable, Optional
 from numpy.typing import ArrayLike
 from argparse import ArgumentParser
 import soundfile as sf
+import sounddevice as sd
 import numpy as np
 import scipy.signal
 
@@ -24,6 +25,11 @@ ARGUMENTS = {
 
 	"--output-file": {
 		"help": "Where to store the sped up audio"
+	},
+
+	"--play": {
+		"help": "Play the new audio instead of saving it",
+		"action": "store_true"
 	}
 }
 
@@ -59,8 +65,14 @@ def speedup_file(
 	spedup_audio = speedup(audio, multiplier)
 	sf.write(output_file, spedup_audio, samplerate)
 
+def speedup_play(input_file: str, multiplier: float):
+	audio, samplerate = sf.read(input_file)
+	sd.play(audio, samplerate * multiplier, blocking=True)
+
 def main() -> None:
 	args = arg_parser.parse_args()
+	if args.play:
+		speedup_play(args.audio_file, args.multiplier)
 	speedup_file(args.audio_file, args.multiplier, args.codec, args.output_file)
 
 if __name__ == "__main__":
