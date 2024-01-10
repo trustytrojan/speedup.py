@@ -1,1 +1,2 @@
 - make a client module that works against the server
+- make an endpoint on the server that accepts youtube video ids
